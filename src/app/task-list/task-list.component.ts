@@ -1,14 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import { AppService } from '../app.service';
 import { Task } from '../model/task';
-
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import * as Moment from 'moment';
 @Component({
   selector: 'app-task-list',
   templateUrl: './task-list.component.html',
   styleUrls: ['./task-list.component.css']
 })
 export class TaskListComponent implements OnInit {
-  task: Task
+  moment = Moment
+  taskForm: FormGroup;
 
   badgeStyle = {
     "Open": "text-bg-secondary",
@@ -23,21 +25,24 @@ export class TaskListComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.clear()
+    this.taskForm = new FormGroup({
+      title: new FormControl(null, Validators.required),
+      description: new FormControl(null, Validators.required),
+      dueDate: new FormControl(null, Validators.required),
+      status: new FormControl(null, Validators.required),
+    })
     this.service.getTaskList().subscribe((data: Task[]) => {
       this.taskList = data;
     });
   }
+
   clear() {
-    this.task = {
-      title: '',
-      description: '',
-      dueDate: '',
-      status: 'Open'
-    }
+    this.taskForm.reset();
   }
-  createTask(task: Task) {
-    this.service.createTask(task).subscribe((data) => {
+
+  createTask() {
+
+    this.service.createTask(this.taskForm.value).subscribe((data) => {
       // this.addTask = false
       this.taskList.push(data)
       this.clear();

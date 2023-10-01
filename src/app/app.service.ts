@@ -25,8 +25,8 @@ export class AppService {
     return this.httpClient.get<Task>(this.API_HOST + '/tasks/' + id)
   }
 
-  updateTaskById(task: Task): Observable<any> {
-    return this.httpClient.put<Task>(this.API_HOST + '/tasks/' + task._id, task)
+  updateTaskById(id: string, task: Task): Observable<Task> {
+    return this.httpClient.put<Task>(this.API_HOST + '/tasks/' + id, task)
   }
 
   deleteTaskById(id: string): Observable<any> {
