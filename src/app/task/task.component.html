@@ -1,0 +1,56 @@
+<ng-container *ngIf="editMode; else elseTemplate">
+    <div class="modal-body">
+        <form>
+            <div class="mb-3">
+                <label for="recipient-name" class="col-form-label">Title:</label>
+                <input type="text" name="title" class="form-control" placeholder="Title" [(ngModel)]="task.title"
+                    required>
+            </div>
+            <div class="mb-3">
+                <label for="message-text" class="col-form-label">Description:</label>
+                <textarea class="form-control" name="description" id="message-text" placeholder="description"
+                    [(ngModel)]="task.description" required></textarea>
+            </div>
+            <div class="mb-3">
+                <label for="recipient-name" class="col-form-label">DueDate:</label>
+                <input type="date" name="dueDate" placeholder="dueDate" [(ngModel)]="task.dueDate" class="form-control"
+                    required>
+            </div>
+            <div class="mb-3">
+                <label for="recipient-name" class="col-form-label">Status:</label>
+                <select class="form-select" aria-label="Default select example" name="status" [(ngModel)]="task.status">
+                    <option value="Open" selected>Open</option>
+                    <option value="Pending">Pending</option>
+                    <option value="OnHold">OnHold</option>
+                    <option value="Completed">Completed</option>
+                </select>
+            </div>
+            <div class="mb-3">
+                <button class="btn btn-primary me-2" (click)="update(task)">Save</button>
+                <button class="btn btn-secondary" (click)="editMode=false">Cancel</button>
+            </div>
+        </form>
+    </div>
+</ng-container>
+<ng-template #elseTemplate>
+    <div class="mb-3">
+        <label for="recipient-name" class="col-form-label">Title: </label>
+        <h1>{{task.title}}</h1>
+    </div>
+    <div class="mb-3">
+        <label for="message-text" class="col-form-label">Description:</label>
+        <h3>{{task.description}}</h3>
+    </div>
+    <div class="mb-3">
+        <label for="recipient-name" class="col-form-label">DueDate:</label>
+        <h4>{{task.dueDate}}</h4>
+    </div>
+    <div class="mb-3">
+        <label for="recipient-name" class="col-form-label">Status:</label>
+        <h4>{{task.status}}</h4>
+    </div>
+    <div class="mb-3 mt-4">
+        <button class="btn btn-outline-primary me-2" [routerLink]="['../']">Back</button>
+        <button class="btn btn-primary" (click)="editMode=true">Edit</button>
+    </div>
+</ng-template>

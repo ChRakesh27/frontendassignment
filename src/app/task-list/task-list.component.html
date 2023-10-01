@@ -1,0 +1,71 @@
+<div class="d-flex justify-content-between mb-4">
+    <h1>Task Manager</h1>
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal"
+        data-bs-whatever="@mdo">Create Task</button>
+</div>
+
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">New Task</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="mb-3">
+                        <label for="recipient-name" class="col-form-label">Title:</label>
+                        <input type="text" name="title" class="form-control" placeholder="Title"
+                            [(ngModel)]="task.title" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="message-text" class="col-form-label">Description:</label>
+                        <textarea class="form-control" name="description" id="message-text" placeholder="description"
+                            [(ngModel)]="task.description" required></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label for="recipient-name" class="col-form-label">DueDate:</label>
+                        <input type="date" name="dueDate" placeholder="dueDate" [(ngModel)]="task.dueDate"
+                            class="form-control" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="recipient-name" class="col-form-label">Status:</label>
+                        <select class="form-select" aria-label="Default select example" name="status"
+                            [(ngModel)]="task.status">
+                            <option value="Open" selected>Open</option>
+                            <option value="Pending">Pending</option>
+                            <option value="OnHold">OnHold</option>
+                            <option value="Completed">Completed</option>
+                        </select>
+                    </div>
+
+                </form>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" (click)="clear()">Close</button>
+                <button type="button" class="btn btn-primary" data-bs-dismiss="modal"
+                    (click)="createTask(task)">Create</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="list-group w-auto">
+    <div class="list-group-item list-group-item-action" *ngFor="let task of taskList">
+
+        <div class="d-flex w-100 justify-content-between">
+            <div>
+                <h5 class="mb-1">Title: {{task?.title}}</h5>
+                <p class="mb-1">Description: {{task?.description}}</p>
+                <small>Status: </small>
+                <small class="badge" [ngClass]="badgeStyle[task?.status]">{{task?.status}}</small>
+            </div>
+            <div>
+                <div class="mb-2">DueDate: {{task?.dueDate}}</div>
+                <button class="btn btn-primary me-2" [routerLink]="['./', task._id]">View</button>
+                <button class="btn btn-outline-danger" (click)="deleteTask(task)">Delete</button>
+            </div>
+
+        </div>
+    </div>
+</div>
